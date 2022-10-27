@@ -6,8 +6,10 @@ import { useSession } from "next-auth/react";
 
 import { trpc } from "../utils/trpc";
 
-import Layout from "../components/Layout";
 import { useEffect, useState } from "react";
+
+import Layout from "../components/Layout";
+import ProfileNav from "../components/ProfileNav";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -41,8 +43,11 @@ const Home: NextPage = () => {
       </Head>
       <Layout>
         {session && (
-          <main className="container mx-auto grid grid-cols-3 p-4">
-            <div className="col-span-1 flex flex-col">
+          <main className="container mx-auto grid grid-cols-3 gap-y-2 p-4">
+            <div className="col-span-2 col-start-2">
+              <ProfileNav />
+            </div>
+            <div className="col-span-1 flex flex-col p-2">
               <div className="max-h-[296px] max-w-[296px]">
                 <Image
                   src={session.user?.image ? session.user.image : ""}
@@ -57,9 +62,9 @@ const Home: NextPage = () => {
                 {session.user?.name}
               </span>
             </div>
-            <div className="col-span-2">
-              <p className="text-2xl font-bold leading-normal">Message</p>
-              <p className="text-xl font-bold leading-normal">
+            <div className="col-span-2 rounded border-2 border-neutral-800 p-2">
+              <p className="text-2xl font-bold leading-normal">Status</p>
+              <p className="break-normal font-medium">
                 {existingMessage.length > 0 && existingMessage}
                 {existingMessage.length == 0 && "Update your message!"}
               </p>
