@@ -1,10 +1,12 @@
 // src/pages/_app.tsx
 import "../styles/globals.css";
-import { SessionProvider } from "next-auth/react";
-import type { Session } from "next-auth";
-import type { AppType } from "next/app";
-import { trpc } from "../utils/trpc";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import type { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
+import type { AppType } from "next/app";
+
+import { trpc } from "../utils/trpc";
+
 import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
 

@@ -10,7 +10,7 @@ const Layout: React.FC<Props> = ({ children }) => {
   return (
     <>
       <Navbar />
-      <>{children}</>
+      {children}
     </>
   );
 };
