@@ -1,29 +1,17 @@
-import { useEffect, useState } from "react";
-
-import { User } from "@prisma/client";
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
+import Link from "next/link";
 
 import Layout from "../../components/Layout";
 import ProfileNav from "../../components/ProfileNav";
 import UserCard from "../../components/UserCard";
+import { ProfileRoutes } from "../../types/types";
 import { trpc } from "../../utils/trpc";
 
 const Following: NextPage = () => {
   const { data: session } = useSession();
-  const [following, setFollowing] = useState<{ user: User }[]>();
-  const getFollowing = trpc.follow.getFollowing.useQuery();
-
-  useEffect(() => {
-    const following = getFollowing.data;
-
-    if (!following) {
-      return;
-    }
-
-    setFollowing(following);
-  }, [getFollowing.data]);
+  const following = trpc.follow.getFollowing.useQuery().data;
 
   return (
     <>
@@ -39,9 +27,16 @@ const Following: NextPage = () => {
               <ProfileNav />
             </div>
             <div>
-              {following?.map((following) => {
+              {following?.map(({ user }) => {
                 return (
-                  <UserCard key={following.user.id} user={following.user} />
+                  <Link
+                    href={`${ProfileRoutes.Profile}/${user.id}`}
+                    key={user.id}
+                  >
+                    <a>
+                      <UserCard user={user} following={true} />
+                    </a>
+                  </Link>
                 );
               })}
             </div>

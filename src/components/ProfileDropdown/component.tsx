@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 
-import { ProfileRoutes } from "../utils/types";
+import { ProfileRoutes } from "../../types/types";
 
 type Props = {
   isActive: boolean;

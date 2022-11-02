@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { ProfileRoutes } from "../utils/types";
+import { ProfileRoutes } from "../../types/types";
 
 const ProfileNav: React.FC = () => {
   const liStyles =
@@ -26,7 +26,9 @@ const ProfileNav: React.FC = () => {
           </a>
         </Link>
       </li>
-      <li className={pathname === ProfileRoutes.Following ? selectedStyles : ""}>
+      <li
+        className={pathname === ProfileRoutes.Following ? selectedStyles : ""}
+      >
         <Link href={ProfileRoutes.Following}>
           <a>
             <div className={liStyles}>
