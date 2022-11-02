@@ -2,33 +2,34 @@ import { z } from "zod";
 
 import { router, protectedProcedure } from "../trpc";
 
-export const messageRouter = router({
-  updateMessage: protectedProcedure
+export const statusRouter = router({
+  updateStatus: protectedProcedure
     .input(z.object({ text: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const { text } = input;
 
-      const messageUpdate = await ctx.prisma.user.update({
+      const statusUpdate = await ctx.prisma.user.update({
         where: {
           id: ctx.session.user.id,
         },
         data: {
-          message: text,
+          status: text,
         },
       });
 
-      return messageUpdate;
+      return statusUpdate;
     }),
-  getMessage: protectedProcedure.query(async ({ ctx }) => {
+  getStatus: protectedProcedure.query(async ({ ctx }) => {
     const user = await ctx.prisma.user.findUnique({
       where: {
         id: ctx.session.user.id,
       },
     });
 
-    let message;
-    user ? (message = user.message) : null;
+    if (!user) {
+      throw new Error("User not found.");
+    }
 
-    return message;
+    return user.status;
   }),
 });

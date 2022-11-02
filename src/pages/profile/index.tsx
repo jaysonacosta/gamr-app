@@ -12,8 +12,8 @@ import { trpc } from "../../utils/trpc";
 const Profile: NextPage = () => {
   const { data: session } = useSession();
   const [input, setInput] = useState("");
-  const mutation = trpc.message.updateMessage.useMutation();
-  const { data: currentStatus, refetch } = trpc.message.getMessage.useQuery();
+  const mutation = trpc.status.updateStatus.useMutation();
+  const { data: currentStatus, refetch } = trpc.status.getStatus.useQuery();
 
   const handleMessageUpdate = () => {
     mutation.mutate({ text: input });

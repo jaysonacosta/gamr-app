@@ -2,12 +2,12 @@
 import { router } from "../trpc";
 import { authRouter } from "./auth";
 import { followRouter } from "./follow";
-import { messageRouter } from "./message";
+import { statusRouter } from "./status";
 import { userRouter } from "./user";
 
 export const appRouter = router({
   auth: authRouter,
-  message: messageRouter,
+  status: statusRouter,
   follow: followRouter,
   user: userRouter,
 });

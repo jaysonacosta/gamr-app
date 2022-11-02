@@ -13,7 +13,7 @@ const UserProfile: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const {
-    data: { name, image, message } = {},
+    data: { name, image, status } = {},
     refetch,
     isFetched,
   } = trpc.user.getUserById.useQuery(
@@ -60,7 +60,7 @@ const UserProfile: NextPage = () => {
                 </div>
                 <div className="col-span-2 rounded border-2 border-neutral-800 p-2">
                   <p className="text-2xl font-bold leading-normal">Status</p>
-                  <p className="break-normal font-medium">{message}</p>
+                  <p className="break-normal font-medium">{status}</p>
                 </div>
               </>
             )}
