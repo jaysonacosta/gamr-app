@@ -11,26 +11,19 @@ import { trpc } from "../../utils/trpc";
 
 const Profile: NextPage = () => {
   const { data: session } = useSession();
-  const [existingMessage, setExistingMessage] = useState("");
-  const [message, setMessage] = useState("");
+  const [input, setInput] = useState("");
   const mutation = trpc.message.updateMessage.useMutation();
-  const query = trpc.message.getMessage.useQuery();
+  const { data: currentStatus, refetch } = trpc.message.getMessage.useQuery();
 
   const handleMessageUpdate = () => {
-    mutation.mutate({ text: message });
-
-    if (message) {
-      setExistingMessage(message);
-    }
+    mutation.mutate({ text: input });
   };
 
   useEffect(() => {
-    const existingMessage = query.data;
-
-    if (existingMessage) {
-      setExistingMessage(existingMessage);
+    if (mutation.isSuccess) {
+      refetch();
     }
-  }, [query.data]);
+  }, [mutation.isSuccess, refetch]);
 
   return (
     <>
@@ -63,15 +56,14 @@ const Profile: NextPage = () => {
             <div className="col-span-2 rounded border-2 border-neutral-800 p-2">
               <p className="text-2xl font-bold leading-normal">Status</p>
               <p className="break-normal font-medium">
-                {existingMessage.length > 0 && existingMessage}
-                {existingMessage.length == 0 && "Update your message!"}
+                {currentStatus && currentStatus}
               </p>
               <br />
               <div className="flex flex-col items-start">
                 <input
                   className="rounded p-1 text-neutral-900"
                   type="text"
-                  onChange={(e) => setMessage(e.target.value)}
+                  onChange={(e) => setInput(e.target.value)}
                 />
                 <br />
                 <button
